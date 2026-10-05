@@ -1,0 +1,10 @@
+{
+  "sprite": {
+    "x": 0,
+    "y": 0,
+    "width": 128,
+    "height": 128,
+    "pixelRatio": 1,
+    "sdf": true
+  }
+}
