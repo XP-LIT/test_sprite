@@ -2,112 +2,72 @@
   "glow12-residential": {
     "x": 0,
     "y": 0,
-    "width": 256,
-    "height": 256,
+    "width": 160,
+    "height": 160,
     "pixelRatio": 2,
     "sdf": false
   },
   "glow12-emergency": {
-    "x": 256,
+    "x": 160,
     "y": 0,
-    "width": 256,
-    "height": 256,
-    "pixelRatio": 2,
-    "sdf": false
-  },
-  "glow12-education": {
-    "x": 512,
-    "y": 0,
-    "width": 256,
-    "height": 256,
-    "pixelRatio": 2,
-    "sdf": false
-  },
-  "glow12-stadium": {
-    "x": 768,
-    "y": 0,
-    "width": 256,
-    "height": 256,
-    "pixelRatio": 2,
-    "sdf": false
-  },
-  "glow12-airport": {
-    "x": 1024,
-    "y": 0,
-    "width": 256,
-    "height": 256,
-    "pixelRatio": 2,
-    "sdf": false
-  },
-  "glow12-industrial": {
-    "x": 1280,
-    "y": 0,
-    "width": 256,
-    "height": 256,
-    "pixelRatio": 2,
-    "sdf": false
-  },
-  "glow12-commercial": {
-    "x": 1536,
-    "y": 0,
-    "width": 256,
-    "height": 256,
+    "width": 160,
+    "height": 160,
     "pixelRatio": 2,
     "sdf": false
   },
   "glow14-education": {
-    "x": 1792,
+    "x": 320,
     "y": 0,
-    "width": 256,
-    "height": 256,
+    "width": 160,
+    "height": 160,
     "pixelRatio": 2,
     "sdf": false
   },
   "glow14-swimming": {
-    "x": 2048,
+    "x": 480,
     "y": 0,
-    "width": 256,
-    "height": 256,
+    "width": 160,
+    "height": 160,
     "pixelRatio": 2,
     "sdf": false
   },
   "glow14-public": {
-    "x": 2304,
+    "x": 640,
     "y": 0,
-    "width": 256,
-    "height": 256,
+    "width": 160,
+    "height": 160,
     "pixelRatio": 2,
     "sdf": false
   },
   "glow14-recreation": {
-    "x": 2560,
+    "x": 800,
     "y": 0,
-    "width": 256,
-    "height": 256,
+    "width": 160,
+    "height": 160,
     "pixelRatio": 2,
     "sdf": false
   },
   "glow14-emergency": {
-    "x": 2816,
+    "x": 960,
     "y": 0,
-    "width": 256,
-    "height": 256,
+    "width": 160,
+    "height": 160,
     "pixelRatio": 2,
     "sdf": false
   },
   "glow14-park": {
-    "x": 3072,
+    "x": 1120,
     "y": 0,
-    "width": 256,
-    "height": 256,
+    "width": 160,
+    "height": 160,
     "pixelRatio": 2,
     "sdf": false
   },
   "glow14-museum": {
-    "x": 3328,
+    "x": 1280,
     "y": 0,
-    "width": 256,
-    "height": 256,
+    "width": 160,
+    "height": 160,
     "pixelRatio": 2,
     "sdf": false
   }
