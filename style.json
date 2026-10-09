@@ -24,7 +24,7 @@
  "sources": {
    "OFM": {
     "type": "vector",
-    "url": "https://openfreemap.org",
+    "url": "https://tiles.openfreemap.org/planet",
     "minzoom": 12,
     "maxzoom": 14
   },
