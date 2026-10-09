@@ -857,9 +857,9 @@
           13,
           0,
           16,
-          1
+          0
         ],
-        "circle-stroke-color": "rgba(219, 135, 28, 0.3)",
+        "circle-stroke-color": "rgba(199, 212, 255, 0.3)",
         "circle-stroke-width": {
           "stops": [[14, 9], [16, 38]],
           "base": 1.3
