@@ -27,6 +27,7 @@
     "url": "https://tiles.openfreemap.org/planet",
     "minzoom": 12,
     "maxzoom": 14
+   }
   },
     "ArcGIS": {
       "type": "raster",
