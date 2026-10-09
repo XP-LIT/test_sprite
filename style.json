@@ -21,8 +21,13 @@
     "atmosphere-blend": 0.2
   },
   "projection": {"type": "mercator"},
-  "sources": {
-    "OFM": {"type": "vector", "url": "https://tiles.openfreemap.org/planet"},
+ "sources": {
+   "OFM": {
+    "type": "vector",
+    "url": "https://openfreemap.org",
+    "minzoom": 12,
+    "maxzoom": 14
+  },
     "ArcGIS": {
       "type": "raster",
       "tiles": [
