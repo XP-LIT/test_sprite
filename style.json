@@ -397,8 +397,7 @@
             "bus_station",
             "garages",
             "theme_park",
-            "zoo",
-            "stadium"
+            "zoo"
           ]
         ]
       ],
@@ -408,7 +407,7 @@
           "base": 1.3,
           "stops": [
             [12, "rgba(219, 135, 28, 0.3)"],
-            [16, "rgba(219, 135, 28, 0.)"]
+            [16, "rgba(219, 135, 28, 0.1)"]
           ]
         },
         "circle-radius": [
@@ -443,7 +442,8 @@
       "filter": [
         "any",
         ["==", "class", "industrial"],
-        ["==", "class", "railway"]
+        ["==", "class", "railway"],
+        ["==", "class", "stadium"]
       ],
       "layout": {"visibility": "visible"},
       "paint": {
