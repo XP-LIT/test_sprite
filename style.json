@@ -1,0 +1,1187 @@
+{
+  "version": 8,
+  "name": "XP_LIT",
+  "metadata": {
+    "nightlighting for xp12": [
+      {"key": "terrain", "variants": [{"id": "3d_terrain"}]}
+    ],
+    "version": "4.0.0-alpha.1",
+    "maputnik:renderer": "mlgljs"
+  },
+  "center": [-0.0005, 51.4768],
+  "zoom": 15,
+  "light": {"anchor": "viewport", "intensity": 0.3, "position": [1.5, 235, 30]},
+  "sky": {
+    "sky-color": "hsl(208, 90%, 72%)",
+    "sky-horizon-blend": 0.2,
+    "horizon-color": "hsl(0, 0%, 100%)",
+    "horizon-fog-blend": 0.9,
+    "fog-color": "hsla(0, 0%, 100%, 0.2)",
+    "fog-ground-blend": 0.8,
+    "atmosphere-blend": 0.2
+  },
+  "projection": {"type": "mercator"},
+  "sources": {
+    "OFM": {"type": "vector", "url": "https://tiles.openfreemap.org/planet"},
+    "ArcGIS": {
+      "type": "raster",
+      "tiles": [
+        "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+      ],
+      "tileSize": 256,
+      "maxzoom": 16
+    }
+  },
+  "sprite": "https://raw.githubusercontent.com/XP-LIT/test_sprite/refs/heads/main/sprite",
+  "layers": [
+    {
+      "id": "Background",
+      "type": "background",
+      "layout": {"visibility": "visible"},
+      "paint": {"background-color": "rgba(0, 0, 0, 1)"}
+    },
+    {
+      "id": "road_minor",
+      "type": "line",
+      "source": "OFM",
+      "source-layer": "transportation",
+      "minzoom": 12,
+      "maxzoom": 17,
+      "filter": [
+        "all",
+        ["match", ["get", "class"], ["minor"], true, false],
+        ["!=", ["get", "brunnel"], "tunnel"]
+      ],
+      "layout": {
+        "line-cap": "butt",
+        "line-join": "round",
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "rgba(77, 87, 95, 0.3)",
+        "line-opacity": 0.3,
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          13.5,
+          1,
+          15,
+          6,
+          17,
+          6,
+          18,
+          15,
+          20,
+          80
+        ],
+        "line-gap-width": 0,
+        "line-offset": 0,
+        "line-blur": 0
+      }
+    },
+    {
+      "id": "road_tertiary",
+      "type": "line",
+      "source": "OFM",
+      "source-layer": "transportation",
+      "minzoom": 12,
+      "maxzoom": 17,
+      "filter": [
+        "all",
+        ["match", ["get", "class"], "tertiary", true, false],
+        ["!=", ["get", "brunnel"], "tunnel"]
+      ],
+      "layout": {
+        "line-cap": "butt",
+        "line-join": "round",
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "rgba(77, 87, 95, 0.3)",
+        "line-opacity": 0.3,
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          10,
+          0.6,
+          12,
+          1,
+          14,
+          6,
+          17,
+          6,
+          18,
+          22,
+          20,
+          100
+        ],
+        "line-gap-width": 0,
+        "line-offset": 0,
+        "line-blur": 0
+      }
+    },
+    {
+      "id": "road_primary-copy",
+      "type": "line",
+      "source": "OFM",
+      "source-layer": "transportation",
+      "minzoom": 12,
+      "maxzoom": 17,
+      "filter": [
+        "all",
+        ["match", ["get", "class"], ["primary", "secondary"], true, false],
+        ["!=", ["get", "brunnel"], "tunnel"]
+      ],
+      "layout": {
+        "line-cap": "butt",
+        "line-join": "round",
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": {
+          "stops": [
+            [12, "rgba(215, 203, 187, 0.5)"],
+            [15, "rgba(227, 190, 151, 0.5)"]
+          ]
+        },
+        "line-opacity": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12,
+          0.1,
+          16,
+          0.15
+        ],
+        "line-width": {"stops": [[13, 2], [16, 8]], "base": 1.3},
+        "line-gap-width": {"stops": [[13, 1], [16, 1]], "base": 1.3},
+        "line-offset": 0,
+        "line-blur": {"stops": [[12, 8], [16, 2]], "base": 1.3},
+        "line-dasharray": [1, 0]
+      }
+    },
+    {
+      "id": "road_primary",
+      "type": "line",
+      "source": "OFM",
+      "source-layer": "transportation",
+      "minzoom": 12,
+      "maxzoom": 17,
+      "filter": [
+        "all",
+        ["match", ["get", "class"], ["primary", "secondary"], true, false],
+        ["!=", ["get", "brunnel"], "tunnel"]
+      ],
+      "layout": {
+        "line-cap": "butt",
+        "line-join": "round",
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "rgba(77, 87, 95, 1)",
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 12, 0.3, 16, 0],
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          9,
+          0.8,
+          11,
+          1.25,
+          12,
+          1,
+          14,
+          4,
+          15,
+          8,
+          18,
+          30,
+          20,
+          100
+        ],
+        "line-gap-width": 1,
+        "line-offset": 0,
+        "line-blur": 10
+      }
+    },
+    {
+      "id": "road_motorway-copy",
+      "type": "line",
+      "source": "OFM",
+      "source-layer": "transportation",
+      "minzoom": 11,
+      "maxzoom": 17,
+      "filter": [
+        "all",
+        ["match", ["get", "class"], ["motorway", "trunk"], true, false],
+        ["!=", ["get", "brunnel"], "tunnel"]
+      ],
+      "layout": {
+        "line-cap": "butt",
+        "line-join": "round",
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": {
+          "stops": [
+            [12, "rgba(215, 203, 187, 0.5)"],
+            [16, "rgba(227, 190, 151, 0.5)"]
+          ],
+          "base": 1.3
+        },
+        "line-width": {"stops": [[13, 2], [16, 8]], "base": 1.3},
+        "line-opacity": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12,
+          0.1,
+          16,
+          0.15
+        ],
+        "line-blur": {"stops": [[12, 8], [16, 2]], "base": 1.3},
+        "line-offset": 0,
+        "line-gap-width": 1,
+        "line-dasharray": [1, 0]
+      }
+    },
+    {
+      "id": "road_motorway",
+      "type": "line",
+      "source": "OFM",
+      "source-layer": "transportation",
+      "minzoom": 11,
+      "maxzoom": 17,
+      "filter": [
+        "all",
+        ["match", ["get", "class"], ["motorway", "trunk"], true, false],
+        ["!=", ["get", "brunnel"], "tunnel"]
+      ],
+      "layout": {
+        "line-cap": "round",
+        "line-join": "round",
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "rgba(77, 87, 95, 1)",
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          5,
+          1,
+          7,
+          1.5,
+          9,
+          2,
+          11,
+          2,
+          12,
+          1,
+          14,
+          4,
+          15,
+          8
+        ],
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 12, 0.3, 16, 0],
+        "line-blur": 10,
+        "line-offset": 0,
+        "line-gap-width": 1
+      }
+    },
+    {
+      "id": "zone12 residential",
+      "type": "fill",
+      "source": "OFM",
+      "source-layer": "landuse",
+      "minzoom": 11,
+      "maxzoom": 14,
+      "filter": [
+        "in",
+        ["get", "class"],
+        ["literal", ["suburb", "quarter", "neighbourhood", "residential"]]
+      ],
+      "layout": {"visibility": "none"},
+      "paint": {
+        "fill-color": "rgba(219, 135, 28, 0.3)",
+        "fill-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          0.1,
+          16,
+          0
+        ],
+        "fill-antialias": false
+      }
+    },
+    {
+      "id": "zone12 commercial",
+      "type": "fill",
+      "source": "OFM",
+      "source-layer": "landuse",
+      "minzoom": 11,
+      "maxzoom": 14,
+      "filter": ["any", ["==", "class", "commercial"]],
+      "layout": {"visibility": "none"},
+      "paint": {
+        "fill-color": "rgba(233, 221, 200, 0.3)",
+        "fill-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          0.1,
+          16,
+          0
+        ],
+        "fill-antialias": false
+      }
+    },
+    {
+      "id": "zone12 industrial",
+      "type": "fill",
+      "source": "OFM",
+      "source-layer": "landuse",
+      "minzoom": 11,
+      "maxzoom": 17,
+      "filter": ["any", ["==", "class", "industrial"]],
+      "layout": {"visibility": "none"},
+      "paint": {
+        "fill-color": "rgba(144, 151, 131, 0.3)",
+        "fill-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          0.1,
+          16,
+          0
+        ],
+        "fill-antialias": false
+      }
+    },
+    {
+      "id": "zone12 aerodrome",
+      "type": "fill",
+      "source": "OFM",
+      "source-layer": "aeroway",
+      "minzoom": 11,
+      "maxzoom": 17,
+      "filter": ["all", ["!=", "class", "taxiway"], ["!=", "class", "runway"]],
+      "layout": {"visibility": "none"},
+      "paint": {
+        "fill-color": "rgba(144, 151, 131, 0.3)",
+        "fill-opacity": 0.1,
+        "fill-antialias": false
+      }
+    },
+    {
+      "id": "glow12 commercial",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "landuse",
+      "minzoom": 12,
+      "maxzoom": 17,
+      "filter": [
+        "in",
+        ["get", "class"],
+        [
+          "literal",
+          [
+            "commercial",
+            "retail",
+            "bus_station",
+            "garages",
+            "theme_park",
+            "zoo"
+          ]
+        ]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": {
+          "base": 1.3,
+          "stops": [
+            [12, "rgba(219, 135, 28, 0.3)"],
+            [16, "rgba(219, 135, 28, 0.)"]
+          ]
+        },
+        "circle-radius": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          10,
+          16,
+          20
+        ],
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          0.15,
+          16,
+          0.3
+        ],
+        "circle-blur": ["interpolate", ["linear"], ["zoom"], 12, 2, 16, 1],
+        "circle-stroke-color": "rgba(144, 151, 131, 0.3)"
+      }
+    },
+    {
+      "id": "glow12 industrial",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "landuse",
+      "minzoom": 12,
+      "maxzoom": 17,
+      "filter": [
+        "any",
+        ["==", "class", "industrial"],
+        ["==", "class", "railway"]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": {
+          "base": 1.3,
+          "stops": [
+            [12, "rgba(151, 146, 131, 0.3)"],
+            [16, "rgba(151, 146, 131, 0.1)"]
+          ]
+        },
+        "circle-radius": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          10,
+          16,
+          40
+        ],
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          0.15,
+          16,
+          0.3
+        ],
+        "circle-blur": ["interpolate", ["linear"], ["zoom"], 12, 2, 16, 1],
+        "circle-stroke-color": "rgba(151, 146, 131, 0.3)"
+      }
+    },
+    {
+      "id": "glow12 aerodrome",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "aeroway",
+      "minzoom": 12,
+      "maxzoom": 17,
+      "filter": ["all", ["!=", "class", "runway"], ["!=", "class", "taxiway"]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": {
+          "base": 1.3,
+          "stops": [
+            [12, "rgba(144, 151, 131, 0.3)"],
+            [16, "rgba(144, 151, 131, 0.1)"]
+          ]
+        },
+        "circle-radius": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          10.4,
+          16,
+          40
+        ],
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          0.15,
+          16,
+          0.3
+        ],
+        "circle-blur": ["interpolate", ["linear"], ["zoom"], 12, 2, 16, 1],
+        "circle-stroke-color": "rgba(151, 146, 131, 0.3)"
+      }
+    },
+    {
+      "id": "glow12 lights aerodrome",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "aeroway",
+      "minzoom": 12,
+      "maxzoom": 17,
+      "filter": ["all", ["!=", "class", "runway"], ["!=", "class", "taxiway"]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-radius": {"stops": [[12, 1.5], [16, 2]], "base": 1.3},
+        "circle-color": {
+          "stops": [
+            [12, "rgba(233, 240, 225, 1)"],
+            [16, "rgba(253, 239, 229, 0.5)"]
+          ],
+          "base": 1.3
+        },
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          0.3,
+          16,
+          0.7
+        ],
+        "circle-blur": 1
+      }
+    },
+    {
+      "id": "glow12 lights landuse",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "landuse",
+      "minzoom": 12,
+      "maxzoom": 17,
+      "filter": [
+        "in",
+        ["get", "class"],
+        [
+          "literal",
+          [
+            "commercial",
+            "retail",
+            "bus_station",
+            "garages",
+            "theme_park",
+            "zoo",
+            "industrial",
+            "railway"
+          ]
+        ]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-radius": {"stops": [[12, 1.5], [16, 2]], "base": 1.3},
+        "circle-color": {
+          "stops": [
+            [12, "rgba(233, 240, 225, 1)"],
+            [16, "rgba(253, 239, 229, 0.5)"]
+          ],
+          "base": 1.3
+        },
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          0.3,
+          16,
+          0.7
+        ],
+        "circle-blur": 1
+      }
+    },
+    {
+      "id": "glow14 swimming",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "poi",
+      "minzoom": 13,
+      "maxzoom": 17,
+      "filter": ["any", ["==", "class", "swimming_pool"]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": "rgba(99, 212, 255, 0.0)",
+        "circle-radius": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          14,
+          1,
+          16,
+          2
+        ],
+        "circle-stroke-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          13,
+          0,
+          16,
+          1
+        ],
+        "circle-opacity": [
+          "interpolate",
+          ["linear", 1],
+          ["zoom"],
+          13,
+          0,
+          16,
+          1
+        ],
+        "circle-stroke-color": "rgba(99, 212, 255, 0.3)",
+        "circle-stroke-width": {"stops": [[14, 9], [16, 18]], "base": 1.3},
+        "circle-blur": 1
+      }
+    },
+    {
+      "id": "glow14 education",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "poi",
+      "minzoom": 13,
+      "maxzoom": 17,
+      "filter": [
+        "all",
+        [
+          "any",
+          [
+            "in",
+            ["get", "class"],
+            [
+              "literal",
+              ["school", "college", "university", "kindergarten", "fuel"]
+            ]
+          ]
+        ],
+        ["!=", ["get", "subclass"], "charging_station"]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": "rgba(219, 180, 28, 0.3)",
+        "circle-radius": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          14,
+          20,
+          16,
+          40
+        ],
+        "circle-blur": 1,
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          13,
+          0,
+          16,
+          1
+        ]
+      }
+    },
+    {
+      "id": "glow14 public",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "poi",
+      "minzoom": 13,
+      "maxzoom": 17,
+      "filter": [
+        "any",
+        [
+          "in",
+          ["get", "class"],
+          [
+            "literal",
+            [
+              "shop",
+              "office",
+              "grocery",
+              "library",
+              "townhall",
+              "post",
+              "clothing_store",
+              "lodging"
+            ]
+          ]
+        ]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": "rgba(151, 146, 131, 0.3)",
+        "circle-radius": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          14,
+          20,
+          16,
+          40
+        ],
+        "circle-blur": 1,
+        "circle-stroke-opacity": 1,
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          13,
+          0,
+          16,
+          1
+        ]
+      }
+    },
+    {
+      "id": "glow14 recreation",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "poi",
+      "minzoom": 13,
+      "maxzoom": 17,
+      "filter": [
+        "all",
+        [
+          "any",
+          [
+            "in",
+            ["get", "class"],
+            ["literal", ["restaurant", "cafe", "bar", "place_of_worship"]]
+          ]
+        ]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": "rgba(219, 135, 28, 0.3)",
+        "circle-radius": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          14,
+          20,
+          16,
+          40
+        ],
+        "circle-blur": 1,
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          13,
+          0,
+          16,
+          1
+        ]
+      }
+    },
+    {
+      "id": "glow14 stadium",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "landuse",
+      "minzoom": 14,
+      "maxzoom": 17,
+      "filter": ["any", ["==", "class", "pitch"]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": "rgba(128, 163, 81, 0.15)",
+        "circle-radius": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          10,
+          16,
+          20
+        ],
+        "circle-opacity": ["/", ["%", ["*", ["id"], 12345], 151], 1000],
+        "circle-blur": 1
+      }
+    },
+    {
+      "id": "glow14 hospital",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "landuse",
+      "minzoom": 14,
+      "maxzoom": 17,
+      "filter": ["in", ["get", "class"], ["literal", ["hospital"]]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": "rgba(199, 212, 255, 0.3)",
+        "circle-radius": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          10,
+          16,
+          40
+        ],
+        "circle-opacity": ["/", ["%", ["*", ["id"], 12345], 151], 1000],
+        "circle-blur": 1
+      }
+    },
+    {
+      "id": "glow14 emergency",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "poi",
+      "minzoom": 13,
+      "maxzoom": 17,
+      "filter": [
+        "any",
+        ["in", ["get", "class"], ["literal", ["police", "fire_station"]]]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": "rgba(28, 89, 219, 0.3)",
+        "circle-radius": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          14,
+          10,
+          16,
+          40
+        ],
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          13,
+          0,
+          16,
+          1
+        ],
+        "circle-blur": 1
+      }
+    },
+    {
+      "id": "glow14 park",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "poi",
+      "minzoom": 13,
+      "maxzoom": 17,
+      "filter": ["any", ["in", ["get", "class"], ["literal", ["park"]]]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": "rgba(128, 163, 81, 0.3)",
+        "circle-radius": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          14,
+          40,
+          16,
+          80
+        ],
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          13,
+          0,
+          16,
+          1
+        ],
+        "circle-blur": 1
+      }
+    },
+    {
+      "id": "glow14 museum",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "poi",
+      "minzoom": 13,
+      "maxzoom": 17,
+      "filter": [
+        "any",
+        [
+          "in",
+          ["get", "class"],
+          ["literal", ["museum", "zoo", "attraction", "theme_park", "stadium"]]
+        ]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": "rgba(144, 151, 131, 0.3)",
+        "circle-radius": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          14,
+          20,
+          16,
+          40
+        ],
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          13,
+          0,
+          16,
+          1
+        ],
+        "circle-blur": 1
+      }
+    },
+    {
+      "id": "Lights12 spill",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "transportation",
+      "minzoom": 0,
+      "maxzoom": 15,
+      "filter": [
+        "all",
+        [
+          "in",
+          ["get", "class"],
+          ["literal", ["secondary", "tertiary", "minor"]]
+        ],
+        [
+          "any",
+          ["!=", ["get", "class"], "path"],
+          ["==", ["get", "subclass"], "pedestrian"]
+        ]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-radius": {"stops": [[12, 5], [15, 0]], "base": 1.3},
+        "circle-color": "#000000",
+        "circle-opacity": 1,
+        "circle-stroke-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          11,
+          ["rgba", 255, ["+", 100, ["%", ["*", ["id"], 12345], 81]], 20, 1],
+          14,
+          ["rgba", 253, 239, 229, 1]
+        ],
+        "circle-blur": {"stops": [[12, 5], [15, 1]], "base": 1.3},
+        "circle-stroke-width": {"stops": [[12, 10], [14, 20]]},
+        "circle-stroke-opacity": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12,
+          0.1,
+          15,
+          0
+        ]
+      }
+    },
+    {
+      "id": "Lights12 orange",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "transportation",
+      "minzoom": 0,
+      "maxzoom": 14,
+      "filter": [
+        "all",
+        [
+          "in",
+          ["get", "class"],
+          ["literal", ["secondary", "tertiary", "minor"]]
+        ],
+        [
+          "any",
+          ["!=", ["get", "class"], "path"],
+          ["==", ["get", "subclass"], "pedestrian"]
+        ]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-radius": {"stops": [[12, 1.5], [16, 2]], "base": 1.3},
+        "circle-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0,
+          ["rgba", 255, ["+", 100, ["%", ["*", ["id"], 12345], 81]], 20, 1],
+          16,
+          ["rgba", 253, 239, 229, 0.5]
+        ],
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          0.3,
+          16,
+          0.7
+        ],
+        "circle-blur": 1
+      }
+    },
+    {
+      "id": "Lights12 white",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "transportation",
+      "minzoom": 0,
+      "maxzoom": 16,
+      "filter": [
+        "all",
+        [
+          "in",
+          ["get", "class"],
+          ["literal", ["motorway", "trunk", "primary", "path"]]
+        ],
+        [
+          "any",
+          ["!=", ["get", "class"], "path"],
+          ["==", ["get", "subclass"], "pedestrian"]
+        ]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-radius": {"stops": [[12, 1.5], [16, 2]], "base": 1.3},
+        "circle-color": {
+          "stops": [
+            [0, "rgba(233, 240, 225, 0.7)"],
+            [22, "rgba(253, 239, 229, 0.5)"]
+          ],
+          "base": 1.3
+        },
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          0.3,
+          16,
+          0.7
+        ],
+        "circle-blur": 1
+      }
+    },
+    {
+      "id": "Lights14 spill",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "poi",
+      "minzoom": 14,
+      "maxzoom": 17,
+      "filter": [
+        "all",
+        ["!=", "class", "bollard"],
+        ["!=", "class", "garden"],
+        ["!=", "class", "pitch"],
+        ["!=", "class", "stadium"],
+        ["!=", "class", "sports_centre"],
+        ["!=", "class", "park"]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-radius": {"stops": [[12, 3], [16, 12]], "base": 1.3},
+        "circle-color": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          "rgba(255, 128, 26, 0.7)",
+          16,
+          "rgba(253, 239, 229, 0.5)"
+        ],
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          0.15,
+          16,
+          0.3
+        ],
+        "circle-blur": {"stops": [[12, 1], [16, 2]], "base": 1.3},
+        "circle-stroke-opacity": 1,
+        "circle-stroke-color": "#000000"
+      }
+    },
+    {
+      "id": "Lights14",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "poi",
+      "minzoom": 14,
+      "maxzoom": 17,
+      "filter": [
+        "all",
+        ["!=", "class", "bollard"],
+        ["!=", "class", "garden"],
+        ["!=", "class", "swimming_pool"],
+        ["!=", "class", "pitch"],
+        ["!=", "class", "stadium"],
+        ["!=", "class", "sports_centre"],
+        ["!=", "class", "park"]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-radius": {"stops": [[12, 1.5], [16, 2]], "base": 1.3},
+        "circle-color": {
+          "stops": [
+            [12, "rgba(233, 240, 225, 1)"],
+            [16, "rgba(253, 239, 229, 0.5)"]
+          ],
+          "base": 1.3
+        },
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          0.15,
+          16,
+          0.7
+        ],
+        "circle-blur": 1
+      }
+    },
+    {
+      "id": "Building path",
+      "type": "line",
+      "source": "OFM",
+      "source-layer": "transportation",
+      "filter": [
+        "all",
+        [
+          "any",
+          ["==", ["get", "class"], "rail"],
+          ["==", ["get", "class"], "service"]
+        ],
+        ["!=", ["get", "brunnel"], "tunnel"],
+        ["!=", ["get", "subclass"], "subway"]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "line-width": {"stops": [[12, 1], [16, 4]], "base": 1.3},
+        "line-blur": {"stops": [[6, 2], [10, 8]], "base": 1.3},
+        "line-color": "rgba(0, 0, 0, 1)"
+      }
+    },
+    {
+      "id": "Building",
+      "type": "fill",
+      "source": "OFM",
+      "source-layer": "building",
+      "minzoom": 14,
+      "maxzoom": 17,
+      "filter": ["all"],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "fill-antialias": false,
+        "fill-opacity": {"stops": [[0, 0], [16, 1]], "base": 1},
+        "fill-color": "rgba(0, 0, 0, 1)",
+        "fill-outline-color": "rgba(219, 142, 28, 0.1)",
+        "fill-translate": [0, 0]
+      }
+    }
+  ],
+  "created": "0001-01-01T00:00:00Z",
+  "modified": "0001-01-01T00:00:00Z",
+  "id": "rqx1r5w"
+}
