@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Display a map</title>
-    <meta property="og:description" content="Initialize a map in an HTML element with MapLibre GL JS." />
-    <meta property="og:category" content="Getting Started" />
+    <title>XP_LIT Viewer</title>
+    <meta property="og:description" content="Geocode with Nominatim and the maplibre-gl-geocoder plugin." />
+    <meta property="og:category" content="Plugins & Integrations" />
     <meta property="og:order" content="1" />
     <meta property="og:created" content="2025-06-25" />
     <meta charset='utf-8'>
@@ -16,21 +16,80 @@
     </style>
 </head>
 <body>
+<!-- Load the `maplibre-gl-geocoder` plugin. -->
+<script src="https://unpkg.com/@maplibre/maplibre-gl-geocoder@1.5.0/dist/maplibre-gl-geocoder.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/@maplibre/maplibre-gl-geocoder@1.5.0/dist/maplibre-gl-geocoder.css"
+/>
 <div id="map"></div>
 <script type="module">
     import * as maplibregl from 'https://unpkg.com/maplibre-gl@6.13.0/dist/maplibre-gl.mjs';
 
     const map = new maplibregl.Map({
-        container: 'map', // container id
-        style: 'https://raw.githubusercontent.com/XP-LIT/test_sprite/refs/heads/main/style.json', // style URL
-        center: [-0.0005, 51.4768], // starting position [lng, lat]
-        zoom: 12, // starting zoom
-        minZoom: 10,
+        container: 'map',
+        style: 'https://raw.githubusercontent.com/XP-LIT/test_sprite/refs/heads/main/style.json',
+        center: [-0.0005, 51.4768],
+        zoom: 12,
+        minZoom: 12,
 	maxZoom: 16,
-        maplibreLogo: false
+        pitch: 0,
+        bearing: 0,
+        canvasContextAttributes: {antialias: true}
     });
+
+    const nav = new maplibregl.NavigationControl({
+        showZoom: true,
+        showCompass: true
+    });
+    map.addControl(nav, 'top-right');
+
+    const geocoderApi = {
+        forwardGeocode: async (config) => {
+            const features = [];
+            try {
+                const request =
+            `https://nominatim.openstreetmap.org/search?q=${
+                config.query
+            }&format=geojson&polygon_geojson=1&addressdetails=1`;
+                const response = await fetch(request);
+                const geojson = await response.json();
+                for (const feature of geojson.features) {
+                    const center = [
+                        feature.bbox[0] +
+                    (feature.bbox[2] - feature.bbox[0]) / 2,
+                        feature.bbox[1] +
+                    (feature.bbox[3] - feature.bbox[1]) / 2
+                    ];
+                    const point = {
+                        type: 'Feature',
+                        geometry: {
+                            type: 'Point',
+                            coordinates: center
+                        },
+                        place_name: feature.properties.display_name,
+                        properties: feature.properties,
+                        text: feature.properties.display_name,
+                        place_type: ['place'],
+                        center
+                    };
+                    features.push(point);
+                }
+            } catch (e) {
+                console.error(`Failed to forwardGeocode with error: ${e}`);
+            }
+
+            return {
+                features
+            };
+        }
+    };
+    map.addControl(
+        new MaplibreGeocoder(geocoderApi, {
+            maplibregl
+        }),
+        'top-left'
+    );
 </script>
 </body>
 </html>
-
-
