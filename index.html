@@ -90,6 +90,11 @@
         }),
         'top-left'
     );
+const geocoder = new MaplibreGeocoder(geocoderApi, {
+    maplibregl: maplibregl,
+    flyTo: false,
+    zoom: 14
+});	
 </script>
 </body>
 </html>
