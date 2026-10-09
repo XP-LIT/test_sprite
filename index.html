@@ -47,6 +47,11 @@
     const geocoderApi = {
         forwardGeocode: async (config) => {
             const features = [];
+			const geocoder = new MaplibreGeocoder(geocoderApi, {
+               maplibregl: maplibregl,
+               flyTo: false,
+               zoom: 14 
+			});
             try {
                 const request =
             `https://nominatim.openstreetmap.org/search?q=${
@@ -90,10 +95,7 @@
         }),
         'top-left'
     );
-const geocoder = new MaplibreGeocoder(geocoderApi, {
-    maplibregl: maplibregl,
-    flyTo: false,
-    zoom: 14
+
 });	
 </script>
 </body>
