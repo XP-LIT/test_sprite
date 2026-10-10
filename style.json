@@ -854,7 +854,7 @@
       "id": "glow14 pitch",
       "type": "circle",
       "source": "OFM",
-      "source-layer": "poi",
+      "source-layer": "landuse",
       "minzoom": 14,
       "maxzoom": 17,
       "filter": [
@@ -936,7 +936,8 @@
                 "american_handball",
                 "beachvolleyball",
                 "pickleball",
-                "futsal"
+                "futsal",
+                "cricket_nets"
               ]
             ]
           ]
@@ -958,7 +959,7 @@
           "interpolate",
           ["exponential", 1.3],
           ["zoom"],
-          13,
+          12,
           0,
           16,
           1
