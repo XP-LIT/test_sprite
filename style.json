@@ -506,7 +506,7 @@
       "type": "circle",
       "source": "OFM",
       "source-layer": "landuse",
-      "minzoom": 14,
+      "minzoom": 12,
       "maxzoom": 17,
       "filter": ["any", ["==", "class", "pitch"]],
       "layout": {"visibility": "visible"},
