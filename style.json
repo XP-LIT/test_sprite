@@ -29,7 +29,7 @@
         "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
       ],
       "tileSize": 256,
-      "maxzoom": 16
+      "maxzoom": 14
     }
   },
   "sprite": "https://raw.githubusercontent.com/XP-LIT/test_sprite/refs/heads/main/sprite",
@@ -38,7 +38,7 @@
       "id": "Background",
       "type": "background",
       "layout": {"visibility": "visible"},
-      "paint": {"background-color": "rgba(0, 0, 0, 1)"}
+      "paint": {"background-color": "rgba(0, 0, 0, 1)", "background-opacity": 1}
     },
     {
       "id": "road_minor",
@@ -304,7 +304,7 @@
       }
     },
     {
-      "id": "zone12 residential",
+      "id": "Landuse residential",
       "type": "fill",
       "source": "OFM",
       "source-layer": "landuse",
@@ -336,7 +336,7 @@
       }
     },
     {
-      "id": "zone12 commercial",
+      "id": "Landuse commercial",
       "type": "fill",
       "source": "OFM",
       "source-layer": "landuse",
@@ -351,7 +351,7 @@
       }
     },
     {
-      "id": "zone12 industrial",
+      "id": "Landuse industrial",
       "type": "fill",
       "source": "OFM",
       "source-layer": "landuse",
@@ -366,14 +366,14 @@
       }
     },
     {
-      "id": "zone12 aerodrome",
+      "id": "Landuse aerodrome",
       "type": "fill",
       "source": "OFM",
       "source-layer": "aeroway",
       "minzoom": 14,
       "maxzoom": 17,
       "filter": ["all", ["!=", "class", "taxiway"], ["!=", "class", "runway"]],
-      "layout": {"visibility": "visible"},
+      "layout": {"visibility": "none"},
       "paint": {
         "fill-color": "rgba(144, 151, 131, 0.3)",
         "fill-opacity": 0.15,
@@ -381,7 +381,51 @@
       }
     },
     {
-      "id": "glow12 commercial",
+      "id": "glow_aerodrome",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "aeroway",
+      "minzoom": 0,
+      "maxzoom": 17,
+      "filter": [
+        "all",
+        ["!=", "class", "runway"],
+        ["!=", "class", "taxiway"],
+        ["!=", "class", "helipad"]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-color": {
+          "base": 1.3,
+          "stops": [
+            [12, "rgba(144, 151, 131, 0.3)"],
+            [16, "rgba(144, 151, 131, 0.1)"]
+          ]
+        },
+        "circle-radius": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          10,
+          16,
+          40
+        ],
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          0.15,
+          16,
+          0.3
+        ],
+        "circle-blur": ["interpolate", ["linear"], ["zoom"], 12, 2, 16, 1],
+        "circle-stroke-color": "rgba(151, 146, 131, 0.3)"
+      }
+    },
+    {
+      "id": "glow_Landuse commercial",
       "type": "circle",
       "source": "OFM",
       "source-layer": "landuse",
@@ -434,7 +478,7 @@
       }
     },
     {
-      "id": "glow12 industrial",
+      "id": "glow_Landuse industrial",
       "type": "circle",
       "source": "OFM",
       "source-layer": "landuse",
@@ -478,7 +522,7 @@
       }
     },
     {
-      "id": "glow12 hospital",
+      "id": "glow_Landuse hospital",
       "type": "circle",
       "source": "OFM",
       "source-layer": "landuse",
@@ -502,27 +546,40 @@
       }
     },
     {
-      "id": "glow12 aerodrome",
+      "id": "glow_Landuse pitch",
       "type": "circle",
       "source": "OFM",
-      "source-layer": "aeroway",
-      "minzoom": 0,
+      "source-layer": "landuse",
+      "minzoom": 14,
       "maxzoom": 17,
       "filter": [
         "all",
-        ["!=", "class", "runway"],
-        ["!=", "class", "taxiway"],
-        ["!=", "class", "helipad"]
+        ["==", ["get", "class"], "pitch"],
+        [
+          "!",
+          [
+            "in",
+            ["get", "subclass"],
+            [
+              "literal",
+              [
+                "soccer",
+                "tennis",
+                "beach_volleyball",
+                "american_football",
+                "baseball",
+                "basketball",
+                "rugby",
+                "cricket",
+                "field_hockey"
+              ]
+            ]
+          ]
+        ]
       ],
       "layout": {"visibility": "visible"},
       "paint": {
-        "circle-color": {
-          "base": 1.3,
-          "stops": [
-            [12, "rgba(144, 151, 131, 0.3)"],
-            [16, "rgba(144, 151, 131, 0.1)"]
-          ]
-        },
+        "circle-color": "rgba(144, 151, 131, 0.1)",
         "circle-radius": [
           "interpolate",
           ["exponential", 1.3],
@@ -530,105 +587,22 @@
           12,
           10,
           16,
-          40
+          20
         ],
         "circle-opacity": [
           "interpolate",
           ["exponential", 1.3],
           ["zoom"],
           12,
-          0.15,
+          0.1,
           16,
           0.3
         ],
-        "circle-blur": ["interpolate", ["linear"], ["zoom"], 12, 2, 16, 1],
-        "circle-stroke-color": "rgba(151, 146, 131, 0.3)"
-      }
-    },
-    {
-      "id": "glow12 lights aerodrome",
-      "type": "circle",
-      "source": "OFM",
-      "source-layer": "aeroway",
-      "minzoom": 0,
-      "maxzoom": 17,
-      "filter": [
-        "all",
-        ["!=", "class", "runway"],
-        ["!=", "class", "taxiway"],
-        ["!=", "class", "helipad"]
-      ],
-      "layout": {"visibility": "visible"},
-      "paint": {
-        "circle-radius": {"stops": [[12, 1.5], [16, 2]], "base": 1.3},
-        "circle-color": {
-          "stops": [
-            [12, "rgba(233, 240, 225, 1)"],
-            [16, "rgba(253, 239, 229, 0.5)"]
-          ],
-          "base": 1.3
-        },
-        "circle-opacity": [
-          "interpolate",
-          ["exponential", 1.3],
-          ["zoom"],
-          12,
-          0.3,
-          16,
-          0.7
-        ],
         "circle-blur": 1
       }
     },
     {
-      "id": "glow12 lights landuse",
-      "type": "circle",
-      "source": "OFM",
-      "source-layer": "landuse",
-      "minzoom": 0,
-      "maxzoom": 17,
-      "filter": [
-        "in",
-        ["get", "class"],
-        [
-          "literal",
-          [
-            "commercial",
-            "retail",
-            "bus_station",
-            "garages",
-            "theme_park",
-            "zoo",
-            "industrial",
-            "railway",
-            "stadium"
-          ]
-        ]
-      ],
-      "layout": {"visibility": "visible"},
-      "paint": {
-        "circle-radius": {"stops": [[12, 1.5], [16, 2]], "base": 1.3},
-        "circle-color": {
-          "stops": [
-            [12, "rgba(233, 240, 225, 1)"],
-            [16, "rgba(253, 239, 229, 0.5)"]
-          ],
-          "base": 1.3
-        },
-        "circle-opacity": [
-          "interpolate",
-          ["exponential", 1.3],
-          ["zoom"],
-          12,
-          0.3,
-          16,
-          0.7
-        ],
-        "circle-blur": 1
-      }
-    },
-    {
-      "id": "glow14 swimming",
+      "id": "glow_POI swimming",
       "type": "circle",
       "source": "OFM",
       "source-layer": "poi",
@@ -676,7 +650,7 @@
       }
     },
     {
-      "id": "glow14 education",
+      "id": "glow_POI education",
       "type": "circle",
       "source": "OFM",
       "source-layer": "poi",
@@ -722,7 +696,7 @@
       }
     },
     {
-      "id": "glow14 public",
+      "id": "glow_POI public",
       "type": "circle",
       "source": "OFM",
       "source-layer": "poi",
@@ -774,7 +748,7 @@
       }
     },
     {
-      "id": "glow14 recreation",
+      "id": "glow_POI recreation",
       "type": "circle",
       "source": "OFM",
       "source-layer": "poi",
@@ -816,7 +790,7 @@
       }
     },
     {
-      "id": "glow14 emergency",
+      "id": "glow_POI emergency",
       "type": "circle",
       "source": "OFM",
       "source-layer": "poi",
@@ -851,62 +825,7 @@
       }
     },
     {
-      "id": "glow14 pitch",
-      "type": "circle",
-      "source": "OFM",
-      "source-layer": "landuse",
-      "minzoom": 14,
-      "maxzoom": 17,
-      "filter": [
-        "all",
-        ["==", ["get", "class"], "pitch"],
-        [
-          "!",
-          [
-            "in",
-            ["get", "subclass"],
-            [
-              "literal",
-              [
-                "soccer",
-                "tennis",
-                "beach_volleyball",
-                "american_football",
-                "baseball",
-                "basketball",
-                "rugby",
-                "cricket"
-              ]
-            ]
-          ]
-        ]
-      ],
-      "layout": {"visibility": "visible"},
-      "paint": {
-        "circle-color": "rgba(144, 151, 131, 0.1)",
-        "circle-radius": [
-          "interpolate",
-          ["exponential", 1.3],
-          ["zoom"],
-          12,
-          10,
-          16,
-          20
-        ],
-        "circle-opacity": [
-          "interpolate",
-          ["exponential", 1.3],
-          ["zoom"],
-          12,
-          0.1,
-          16,
-          0.3
-        ],
-        "circle-blur": 1
-      }
-    },
-    {
-      "id": "glow14 park",
+      "id": "glow_POI park",
       "type": "circle",
       "source": "OFM",
       "source-layer": "poi",
@@ -916,28 +835,23 @@
         "all",
         [
           "any",
-          ["in", ["get", "class"], ["literal", ["park", "stadium", "pitch"]]]
-        ],
-        [
-          "!",
+          ["in", ["get", "class"], ["literal", ["park", "stadium"]]],
           [
-            "in",
-            ["get", "subclass"],
+            "all",
+            ["==", ["get", "class"], "pitch"],
             [
-              "literal",
+              "in",
+              ["get", "subclass"],
               [
-                "tennis",
-                "basketball",
-                "volleyball",
-                "table_tennis",
-                "tetherball",
-                "kickball",
-                "four_square",
-                "american_handball",
-                "beachvolleyball",
-                "pickleball",
-                "futsal",
-                "cricket_nets"
+                "literal",
+                [
+                  "soccer",
+                  "rugby",
+                  "american_football",
+                  "cricket",
+                  "field_hockey",
+                  "baseball"
+                ]
               ]
             ]
           ]
@@ -968,7 +882,7 @@
       }
     },
     {
-      "id": "glow14 museum",
+      "id": "glow_POI museum",
       "type": "circle",
       "source": "OFM",
       "source-layer": "poi",
@@ -976,11 +890,7 @@
       "maxzoom": 17,
       "filter": [
         "any",
-        [
-          "in",
-          ["get", "class"],
-          ["literal", ["museum", "zoo", "attraction", "theme_park"]]
-        ]
+        ["in", ["get", "class"], ["literal", ["museum", "zoo", "theme_park"]]]
       ],
       "layout": {"visibility": "visible"},
       "paint": {
@@ -1007,7 +917,89 @@
       }
     },
     {
-      "id": "Lights12 spill",
+      "id": "Lights_aerodrome",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "aeroway",
+      "minzoom": 0,
+      "maxzoom": 17,
+      "filter": [
+        "all",
+        ["!=", "class", "runway"],
+        ["!=", "class", "taxiway"],
+        ["!=", "class", "helipad"]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-radius": {"stops": [[12, 1.5], [16, 2]], "base": 1.3},
+        "circle-color": {
+          "stops": [
+            [12, "rgba(233, 240, 225, 1)"],
+            [16, "rgba(253, 239, 229, 0.5)"]
+          ],
+          "base": 1.3
+        },
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          0.3,
+          16,
+          0.7
+        ],
+        "circle-blur": 1
+      }
+    },
+    {
+      "id": "Lights_landuse",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "landuse",
+      "minzoom": 0,
+      "maxzoom": 17,
+      "filter": [
+        "in",
+        ["get", "class"],
+        [
+          "literal",
+          [
+            "commercial",
+            "retail",
+            "bus_station",
+            "garages",
+            "theme_park",
+            "zoo",
+            "industrial",
+            "railway",
+            "stadium"
+          ]
+        ]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-radius": {"stops": [[12, 1.5], [16, 2]], "base": 1.3},
+        "circle-color": {
+          "stops": [
+            [12, "rgba(233, 240, 225, 1)"],
+            [16, "rgba(253, 239, 229, 0.5)"]
+          ],
+          "base": 1.3
+        },
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          0.3,
+          16,
+          0.7
+        ],
+        "circle-blur": 1
+      }
+    },
+    {
+      "id": "Lights_Transport spill",
       "type": "circle",
       "source": "OFM",
       "source-layer": "transportation",
@@ -1054,7 +1046,7 @@
       }
     },
     {
-      "id": "Lights12 orange",
+      "id": "Lights_Transport orange",
       "type": "circle",
       "source": "OFM",
       "source-layer": "transportation",
@@ -1098,7 +1090,7 @@
       }
     },
     {
-      "id": "Lights12 white",
+      "id": "Lights_Transport white",
       "type": "circle",
       "source": "OFM",
       "source-layer": "transportation",
@@ -1140,7 +1132,7 @@
       }
     },
     {
-      "id": "Lights14 spill",
+      "id": "Lights_POI spill",
       "type": "circle",
       "source": "OFM",
       "source-layer": "poi",
@@ -1181,7 +1173,7 @@
       }
     },
     {
-      "id": "Lights14",
+      "id": "Lights_POI",
       "type": "circle",
       "source": "OFM",
       "source-layer": "poi",
@@ -1193,7 +1185,8 @@
         ["!=", "class", "garden"],
         ["!=", "class", "swimming_pool"],
         ["!=", "class", "pitch"],
-        ["!=", "class", "stadium"]
+        ["!=", "class", "stadium"],
+        ["!=", "class", "sports_centre"]
       ],
       "layout": {"visibility": "visible"},
       "paint": {
@@ -1250,9 +1243,8 @@
       "layout": {"visibility": "visible"},
       "paint": {
         "fill-antialias": false,
-        "fill-opacity": {"stops": [[0, 0], [16, 1]], "base": 1},
+        "fill-opacity": 1,
         "fill-color": "rgba(0, 0, 0, 1)",
-        "fill-outline-color": "rgba(219, 142, 28, 0.1)",
         "fill-translate": [0, 0]
       }
     }
