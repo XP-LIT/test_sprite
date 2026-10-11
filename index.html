@@ -54,7 +54,8 @@
         forwardGeocode: async (config) => {
             const features = [];
             try {
-                const request = `https://openstreetmap.org{encodeURIComponent(config.query)}&format=geojson&polygon_geojson=1&addressdetails=1`;
+
+                const request = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(config.query)}&format=geojson&polygon_geojson=1&addressdetails=1`;
                 
                 const response = await fetch(request, {
                     headers: {
