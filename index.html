@@ -54,9 +54,8 @@
         forwardGeocode: async (config) => {
             const features = [];
             try {
-                const request = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(config.query)}&format=geojson&polygon_geojson=1&addressdetails=1`;
+                const request = `https://openstreetmap.org{encodeURIComponent(config.query)}&format=geojson&polygon_geojson=1&addressdetails=1`;
                 
-                // Fetch mit zwingend erforderlichem User-Agent Header absetzen
                 const response = await fetch(request, {
                     headers: {
                         'User-Agent': 'XP-LIT-MapLibre-Viewer'
@@ -65,13 +64,18 @@
                 const geojson = await response.json();
                 
                 for (const feature of geojson.features) {
-                    // Mittelpunkt aus der Bounding Box errechnen
                     const center = [
                         feature.bbox[0] + (feature.bbox[2] - feature.bbox[0]) / 2,
                         feature.bbox[1] + (feature.bbox[3] - feature.bbox[1]) / 2
                     ];
                     
-                    // Struktur an das vom MapLibre-Geocoder erwartete Carmen-GeoJSON Format anpassen
+                    const bounds = [
+                        feature.bbox[0],
+                        feature.bbox[1],
+                        feature.bbox[2],
+                        feature.bbox[3]
+                    ];
+                    
                     const point = {
                         type: 'Feature',
                         geometry: {
@@ -82,7 +86,8 @@
                         properties: feature.properties,
                         text: feature.properties.display_name,
                         place_type: ['place'],
-                        center
+                        center: center,
+                        bbox: bounds
                     };
                     features.push(point);
                 }
@@ -96,12 +101,14 @@
         }
     };
 
-    // 4. Geocoder-Steuerung oben links zur Karte hinzufügen
     map.addControl(
         new MaplibreGeocoder(geocoderApi, {
             maplibregl: maplibregl,
-            placeholder: 'Ort oder Adresse suchen...',
-            zoom: 14
+            placeholder: 'Search...',
+            fitBoundsOptions: {
+                padding: 40,
+                maxZoom: 16
+            }
         }),
         'top-left'
     );
