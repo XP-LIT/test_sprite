@@ -41,6 +41,54 @@
       "paint": {"background-color": "rgba(0, 0, 0, 1)", "background-opacity": 1}
     },
     {
+      "id": "road_track",
+      "type": "fill",
+      "source": "OFM",
+      "source-layer": "landuse",
+      "minzoom": 14,
+      "maxzoom": 17,
+      "filter": ["all", ["==", "class", "track"]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "fill-color": "rgba(77, 87, 95, 0.3)",
+        "fill-opacity": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12,
+          0.3,
+          16,
+          0.15
+        ],
+        "fill-antialias": true,
+        "fill-outline-color": "rgba(0, 0, 0, 1)"
+      }
+    },
+    {
+      "id": "road_pitch",
+      "type": "line",
+      "source": "OFM",
+      "source-layer": "landuse",
+      "minzoom": 14,
+      "maxzoom": 17,
+      "filter": ["all", ["==", "class", "pitch"]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "line-width": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          14,
+          1,
+          16,
+          2
+        ],
+        "line-blur": 2,
+        "line-opacity": 0.3,
+        "line-color": "rgba(77, 87, 95, 0.3)"
+      }
+    },
+    {
       "id": "road_minor",
       "type": "line",
       "source": "OFM",
@@ -59,7 +107,15 @@
       },
       "paint": {
         "line-color": "rgba(77, 87, 95, 0.3)",
-        "line-opacity": 0.3,
+        "line-opacity": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12,
+          0.3,
+          16,
+          0.15
+        ],
         "line-width": [
           "interpolate",
           ["linear"],
@@ -99,7 +155,15 @@
       },
       "paint": {
         "line-color": "rgba(77, 87, 95, 0.3)",
-        "line-opacity": 0.3,
+        "line-opacity": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12,
+          0.3,
+          16,
+          0.15
+        ],
         "line-width": [
           "interpolate",
           ["linear"],
@@ -143,7 +207,7 @@
         "line-color": {
           "stops": [
             [12, "rgba(215, 203, 187, 0.5)"],
-            [15, "rgba(227, 190, 151, 0.5)"]
+            [15, "rgba(227, 190, 151, 0.3)"]
           ]
         },
         "line-opacity": [
@@ -151,7 +215,7 @@
           ["linear"],
           ["zoom"],
           12,
-          0.1,
+          0.15,
           16,
           0.15
         ],
@@ -233,7 +297,7 @@
         "line-color": {
           "stops": [
             [12, "rgba(215, 203, 187, 0.5)"],
-            [16, "rgba(227, 190, 151, 0.5)"]
+            [16, "rgba(227, 190, 151, 0.3)"]
           ],
           "base": 1.3
         },
@@ -243,7 +307,7 @@
           ["linear"],
           ["zoom"],
           12,
-          0.1,
+          0.15,
           16,
           0.15
         ],
@@ -340,13 +404,13 @@
       "type": "fill",
       "source": "OFM",
       "source-layer": "landuse",
-      "minzoom": 14,
-      "maxzoom": 17,
+      "minzoom": 12,
+      "maxzoom": 14,
       "filter": ["any", ["==", "class", "commercial"]],
-      "layout": {"visibility": "visible"},
+      "layout": {"visibility": "none"},
       "paint": {
         "fill-color": "rgba(233, 221, 200, 0.3)",
-        "fill-opacity": 0.15,
+        "fill-opacity": 0.1,
         "fill-antialias": false
       }
     },
@@ -355,13 +419,13 @@
       "type": "fill",
       "source": "OFM",
       "source-layer": "landuse",
-      "minzoom": 14,
-      "maxzoom": 17,
+      "minzoom": 12,
+      "maxzoom": 14,
       "filter": ["any", ["==", "class", "industrial"]],
-      "layout": {"visibility": "visible"},
+      "layout": {"visibility": "none"},
       "paint": {
         "fill-color": "rgba(144, 151, 131, 0.3)",
-        "fill-opacity": 0.15,
+        "fill-opacity": 0.1,
         "fill-antialias": false
       }
     },
@@ -370,13 +434,13 @@
       "type": "fill",
       "source": "OFM",
       "source-layer": "aeroway",
-      "minzoom": 14,
-      "maxzoom": 17,
+      "minzoom": 12,
+      "maxzoom": 14,
       "filter": ["all", ["!=", "class", "taxiway"], ["!=", "class", "runway"]],
       "layout": {"visibility": "none"},
       "paint": {
         "fill-color": "rgba(144, 151, 131, 0.3)",
-        "fill-opacity": 0.15,
+        "fill-opacity": 0.1,
         "fill-antialias": false
       }
     },
@@ -391,7 +455,8 @@
         "all",
         ["!=", "class", "runway"],
         ["!=", "class", "taxiway"],
-        ["!=", "class", "helipad"]
+        ["!=", "class", "helipad"],
+        ["!=", "class", "heliport"]
       ],
       "layout": {"visibility": "visible"},
       "paint": {
@@ -487,7 +552,6 @@
       "filter": [
         "any",
         ["==", "class", "industrial"],
-        ["==", "class", "railway"],
         ["==", "class", "stadium"]
       ],
       "layout": {"visibility": "visible"},
@@ -552,31 +616,7 @@
       "source-layer": "landuse",
       "minzoom": 14,
       "maxzoom": 17,
-      "filter": [
-        "all",
-        ["==", ["get", "class"], "pitch"],
-        [
-          "!",
-          [
-            "in",
-            ["get", "subclass"],
-            [
-              "literal",
-              [
-                "soccer",
-                "tennis",
-                "beach_volleyball",
-                "american_football",
-                "baseball",
-                "basketball",
-                "rugby",
-                "cricket",
-                "field_hockey"
-              ]
-            ]
-          ]
-        ]
-      ],
+      "filter": ["any", ["==", "class", "pitch"]],
       "layout": {"visibility": "visible"},
       "paint": {
         "circle-color": "rgba(144, 151, 131, 0.1)",
@@ -606,7 +646,7 @@
       "type": "circle",
       "source": "OFM",
       "source-layer": "poi",
-      "minzoom": 13,
+      "minzoom": 14,
       "maxzoom": 17,
       "filter": ["any", ["==", "class", "swimming_pool"]],
       "layout": {"visibility": "visible"},
@@ -654,7 +694,7 @@
       "type": "circle",
       "source": "OFM",
       "source-layer": "poi",
-      "minzoom": 13,
+      "minzoom": 14,
       "maxzoom": 17,
       "filter": [
         "all",
@@ -700,7 +740,7 @@
       "type": "circle",
       "source": "OFM",
       "source-layer": "poi",
-      "minzoom": 13,
+      "minzoom": 14,
       "maxzoom": 17,
       "filter": [
         "any",
@@ -717,7 +757,8 @@
               "townhall",
               "post",
               "clothing_store",
-              "lodging"
+              "lodging",
+              "railway"
             ]
           ]
         ]
@@ -752,7 +793,7 @@
       "type": "circle",
       "source": "OFM",
       "source-layer": "poi",
-      "minzoom": 13,
+      "minzoom": 14,
       "maxzoom": 17,
       "filter": [
         "all",
@@ -761,7 +802,10 @@
           [
             "in",
             ["get", "class"],
-            ["literal", ["restaurant", "cafe", "bar", "place_of_worship"]]
+            [
+              "literal",
+              ["restaurant", "cafe", "bar", "fast_food", "place_of_worship"]
+            ]
           ]
         ]
       ],
@@ -794,7 +838,7 @@
       "type": "circle",
       "source": "OFM",
       "source-layer": "poi",
-      "minzoom": 13,
+      "minzoom": 14,
       "maxzoom": 17,
       "filter": [
         "any",
@@ -829,7 +873,7 @@
       "type": "circle",
       "source": "OFM",
       "source-layer": "poi",
-      "minzoom": 13,
+      "minzoom": 14,
       "maxzoom": 17,
       "filter": [
         "all",
@@ -886,11 +930,15 @@
       "type": "circle",
       "source": "OFM",
       "source-layer": "poi",
-      "minzoom": 13,
+      "minzoom": 14,
       "maxzoom": 17,
       "filter": [
         "any",
-        ["in", ["get", "class"], ["literal", ["museum", "zoo", "theme_park"]]]
+        [
+          "in",
+          ["get", "class"],
+          ["literal", ["museum", "zoo", "theme_park", "bus"]]
+        ]
       ],
       "layout": {"visibility": "visible"},
       "paint": {
@@ -927,7 +975,8 @@
         "all",
         ["!=", "class", "runway"],
         ["!=", "class", "taxiway"],
-        ["!=", "class", "helipad"]
+        ["!=", "class", "helipad"],
+        ["!=", "class", "heliport"]
       ],
       "layout": {"visibility": "visible"},
       "paint": {
@@ -966,12 +1015,10 @@
           [
             "commercial",
             "retail",
-            "bus_station",
             "garages",
             "theme_park",
             "zoo",
             "industrial",
-            "railway",
             "stadium"
           ]
         ]
@@ -1004,18 +1051,30 @@
       "source": "OFM",
       "source-layer": "transportation",
       "minzoom": 0,
-      "maxzoom": 15,
+      "maxzoom": 14,
       "filter": [
         "all",
         [
           "in",
           ["get", "class"],
-          ["literal", ["secondary", "tertiary", "minor"]]
+          [
+            "literal",
+            ["secondary", "tertiary", "minor", "path", "raceway", "rail"]
+          ]
         ],
+        ["!=", ["get", "brunnel"], "tunnel"],
         [
           "any",
-          ["!=", ["get", "class"], "path"],
-          ["==", ["get", "subclass"], "pedestrian"]
+          [
+            "all",
+            ["in", ["get", "class"], ["literal", ["path", "rail"]]],
+            ["in", ["get", "subclass"], ["literal", ["platform"]]]
+          ],
+          [
+            "in",
+            ["get", "class"],
+            ["literal", ["secondary", "tertiary", "minor", "raceway"]]
+          ]
         ]
       ],
       "layout": {"visibility": "visible"},
@@ -1057,13 +1116,9 @@
         [
           "in",
           ["get", "class"],
-          ["literal", ["secondary", "tertiary", "minor"]]
+          ["literal", ["secondary", "tertiary", "minor", "service"]]
         ],
-        [
-          "any",
-          ["!=", ["get", "class"], "path"],
-          ["==", ["get", "subclass"], "pedestrian"]
-        ]
+        ["!=", ["get", "brunnel"], "tunnel"]
       ],
       "layout": {"visibility": "visible"},
       "paint": {
@@ -1101,12 +1156,24 @@
         [
           "in",
           ["get", "class"],
-          ["literal", ["motorway", "trunk", "primary", "path", "raceway"]]
+          [
+            "literal",
+            ["motorway", "trunk", "primary", "path", "raceway", "rail"]
+          ]
         ],
+        ["!=", ["get", "brunnel"], "tunnel"],
         [
           "any",
-          ["!=", ["get", "class"], "path"],
-          ["==", ["get", "subclass"], "pedestrian"]
+          [
+            "all",
+            ["in", ["get", "class"], ["literal", ["path", "rail"]]],
+            ["in", ["get", "subclass"], ["literal", ["pedestrian", "platform"]]]
+          ],
+          [
+            "in",
+            ["get", "class"],
+            ["literal", ["motorway", "trunk", "primary", "raceway"]]
+          ]
         ]
       ],
       "layout": {"visibility": "visible"},
@@ -1211,6 +1278,52 @@
       }
     },
     {
+      "id": "Building lights spill",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "transportation",
+      "minzoom": 14,
+      "maxzoom": 17,
+      "filter": [
+        "all",
+        ["==", "class", "service"],
+        ["==", "service", "parking_aisle"]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-radius": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          10,
+          16,
+          40
+        ],
+        "circle-color": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          0,
+          "rgba(255, 128, 26, 0.3)",
+          16,
+          "rgba(253, 239, 229, 0.1)"
+        ],
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          0.1,
+          16,
+          0.3
+        ],
+        "circle-stroke-color": "#000000",
+        "circle-blur": {"stops": [[12, 2], [16, 1]]},
+        "circle-stroke-opacity": 1
+      }
+    },
+    {
       "id": "Building path",
       "type": "line",
       "source": "OFM",
@@ -1223,12 +1336,29 @@
           ["==", ["get", "class"], "service"]
         ],
         ["!=", ["get", "brunnel"], "tunnel"],
+        ["!=", ["get", "service"], "parking_aisle"],
         ["!=", ["get", "subclass"], "subway"]
       ],
       "layout": {"visibility": "visible"},
       "paint": {
-        "line-width": {"stops": [[12, 1], [16, 4]], "base": 1.3},
-        "line-blur": {"stops": [[6, 2], [10, 8]], "base": 1.3},
+        "line-width": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          1,
+          16,
+          4
+        ],
+        "line-blur": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          6,
+          2,
+          10,
+          8
+        ],
         "line-color": "rgba(0, 0, 0, 1)"
       }
     },
