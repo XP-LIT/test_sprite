@@ -178,6 +178,40 @@
       }
     },
     {
+      "id": "road_platform",
+      "type": "line",
+      "source": "OFM",
+      "source-layer": "transportation",
+      "minzoom": 12,
+      "maxzoom": 17,
+      "filter": [
+        "all",
+        ["==", "class", "path"],
+        ["==", "subclass", "platform"]
+      ],
+      "layout": {"visibility": "visible", "line-join": "round"},
+      "paint": {
+        "line-color": "rgba(77, 87, 95, 0.3)",
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          13.5,
+          1,
+          15,
+          6,
+          17,
+          6,
+          18,
+          15,
+          20,
+          80
+        ],
+        "line-blur": 0,
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 12, 0.3, 16, 0.15]
+      }
+    },
+    {
       "id": "road_minor",
       "type": "line",
       "source": "OFM",
@@ -997,7 +1031,8 @@
       "filter": [
         "all",
         ["==", "class", "service"],
-        ["==", "service", "parking_aisle"]
+        ["==", "service", "parking_aisle"],
+        ["!=", "brunnel", "tunnel"]
       ],
       "layout": {"visibility": "visible"},
       "paint": {
@@ -1034,7 +1069,7 @@
       }
     },
     {
-      "id": "Lights_service spill",
+      "id": "Lights_driveway spill",
       "type": "circle",
       "source": "OFM",
       "source-layer": "transportation",
@@ -1043,9 +1078,8 @@
       "filter": [
         "all",
         ["==", "class", "service"],
-        ["==", "access", "no"],
-        ["!=", "servie", "parking_aisle"],
-        ["==", "service", "driveway"]
+        ["!=", "service", "parking_aisle"],
+        ["!=", "brunnel", "tunnel"]
       ],
       "layout": {"visibility": "visible"},
       "paint": {
@@ -1199,7 +1233,7 @@
       "source": "OFM",
       "source-layer": "transportation",
       "minzoom": 0,
-      "maxzoom": 14,
+      "maxzoom": 16,
       "filter": [
         "all",
         [
@@ -1207,7 +1241,15 @@
           ["get", "class"],
           ["literal", ["secondary", "tertiary", "minor", "service"]]
         ],
-        ["!=", ["get", "brunnel"], "tunnel"]
+        ["!=", ["get", "brunnel"], "tunnel"],
+        [
+          "!",
+          [
+            "all",
+            ["==", ["get", "class"], "service"],
+            ["==", ["get", "service"], "parking_aisle"]
+          ]
+        ]
       ],
       "layout": {"visibility": "visible"},
       "paint": {
@@ -1419,6 +1461,80 @@
         "fill-opacity": 1,
         "fill-color": "rgba(0, 0, 0, 1)",
         "fill-translate": [0, 0]
+      }
+    },
+    {
+      "id": "test-copy",
+      "type": "symbol",
+      "source": "OFM",
+      "source-layer": "transportation",
+      "minzoom": 12,
+      "maxzoom": 16,
+      "filter": [
+        "all",
+        ["==", ["get", "class"], "service"],
+        ["==", ["get", "access"], "no"],
+        ["!=", ["get", "brunnel"], "tunnel"]
+      ],
+      "layout": {
+        "symbol-placement": "line",
+        "text-field": "",
+        "text-allow-overlap": true,
+        "text-ignore-placement": true,
+        "symbol-spacing": {"stops": [[12, 10], [16, 1]]},
+        "text-size": 16,
+        "visibility": "none",
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
+        "icon-image": "glow14-museum",
+        "icon-size": {"stops": [[12, 0.1], [16, 2]]}
+      },
+      "paint": {"text-opacity": 1, "text-halo-color": "rgba(0, 0, 0, 0)"}
+    },
+    {
+      "id": "test",
+      "type": "symbol",
+      "source": "OFM",
+      "source-layer": "transportation",
+      "minzoom": 12,
+      "maxzoom": 16,
+      "filter": [
+        "all",
+        ["==", ["get", "class"], "service"],
+        ["==", ["get", "access"], "no"],
+        ["!=", ["get", "brunnel"], "tunnel"]
+      ],
+      "layout": {
+        "symbol-placement": "line",
+        "text-field": "•",
+        "text-allow-overlap": true,
+        "text-ignore-placement": true,
+        "symbol-spacing": {"stops": [[13, 10], [16, 40]]},
+        "text-size": {"stops": [[12, 16], [16, 100]]},
+        "visibility": "none"
+      },
+      "paint": {
+        "text-color": "rgba(255, 0, 0, 0)",
+        "text-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          0.3,
+          16,
+          0.7
+        ],
+        "text-halo-color": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          0,
+          "rgba(255, 128, 26, 0.3)",
+          16,
+          "rgba(253, 239, 229, 0.1)"
+        ],
+        "text-halo-width": 10,
+        "text-halo-blur": 10
       }
     }
   ],
