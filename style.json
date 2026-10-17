@@ -1255,7 +1255,7 @@
       "source": "OFM",
       "source-layer": "transportation",
       "minzoom": 0,
-      "maxzoom": 15,
+      "maxzoom": 14,
       "filter": [
         "all",
         [
@@ -1285,7 +1285,7 @@
           16,
           ["rgba", 253, 239, 229, 0.5]
         ],
-        "circle-opacity": {"stops": [[12, 0.15], [13, 0.3], [14, 0]]},
+        "circle-opacity": {"stops": [[12, 0.15], [13, 0.3], [14, 1]]},
         "circle-blur": 1
       }
     },
