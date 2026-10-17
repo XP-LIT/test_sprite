@@ -1204,7 +1204,7 @@
           ["get", "class"],
           [
             "literal",
-            ["secondary", "tertiary", "minor", "path", "raceway", "rail"]
+            ["secondary_off", "tertiary_off", "minor", "path", "raceway"]
           ]
         ],
         ["!=", ["get", "brunnel"], "tunnel"],
@@ -1213,18 +1213,12 @@
           [
             "in",
             ["get", "class"],
-            ["literal", ["secondary", "tertiary", "minor", "raceway"]]
+            ["literal", ["secondary_off", "tertiary_off", "minor", "raceway"]]
           ],
           [
             "all",
-            ["in", ["get", "class"], ["literal", ["path", "rail"]]],
+            ["in", ["get", "class"], ["literal", ["path"]]],
             ["==", ["get", "subclass"], "platform"]
-          ],
-          [
-            "all",
-            ["==", ["get", "class"], "rail"],
-            ["==", ["get", "subclass"], "rail"],
-            ["==", ["get", "service"], "yard"]
           ]
         ]
       ],
@@ -1239,18 +1233,18 @@
           ["zoom"],
           11,
           ["rgba", 255, ["+", 100, ["%", ["*", ["id"], 12345], 81]], 20, 1],
-          14,
+          15,
           ["rgba", 253, 239, 229, 1]
         ],
         "circle-blur": {"stops": [[12, 5], [14, 1]], "base": 1.3},
-        "circle-stroke-width": {"stops": [[12, 10], [14, 20]]},
+        "circle-stroke-width": {"stops": [[12, 5], [14, 20]]},
         "circle-stroke-opacity": [
           "interpolate",
           ["linear"],
           ["zoom"],
           12,
           0.1,
-          15,
+          14,
           0
         ]
       }
@@ -1291,15 +1285,7 @@
           16,
           ["rgba", 253, 239, 229, 0.5]
         ],
-        "circle-opacity": [
-          "interpolate",
-          ["exponential", 1.3],
-          ["zoom"],
-          12,
-          0.3,
-          16,
-          0.7
-        ],
+        "circle-opacity": {"stops": [[12, 0.15], [13, 0.3], [14, 0]]},
         "circle-blur": 1
       }
     },
@@ -1350,7 +1336,7 @@
           ["exponential", 1.3],
           ["zoom"],
           12,
-          0.3,
+          0.15,
           16,
           0.7
         ],
