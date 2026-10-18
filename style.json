@@ -1005,56 +1005,11 @@
       }
     },
     {
-      "id": "Lights_landuse",
-      "type": "circle",
-      "source": "OFM",
-      "source-layer": "landuse",
-      "minzoom": 0,
-      "maxzoom": 15,
-      "filter": [
-        "in",
-        ["get", "class"],
-        [
-          "literal",
-          [
-            "commercial",
-            "retail",
-            "garages",
-            "theme_park",
-            "zoo",
-            "industrial",
-            "stadium"
-          ]
-        ]
-      ],
-      "layout": {"visibility": "visible"},
-      "paint": {
-        "circle-radius": {"stops": [[12, 1.5], [16, 2]], "base": 1.3},
-        "circle-color": {
-          "stops": [
-            [12, "rgba(233, 240, 225, 1)"],
-            [16, "rgba(253, 239, 229, 0.5)"]
-          ],
-          "base": 1.3
-        },
-        "circle-opacity": [
-          "interpolate",
-          ["exponential", 1.3],
-          ["zoom"],
-          12,
-          0.3,
-          16,
-          0.7
-        ],
-        "circle-blur": 1
-      }
-    },
-    {
       "id": "Lights_parking spill",
       "type": "circle",
       "source": "OFM",
       "source-layer": "transportation",
-      "minzoom": 14,
+      "minzoom": 13,
       "maxzoom": 17,
       "filter": [
         "all",
@@ -1078,7 +1033,54 @@
           ["exponential", 1.3],
           ["zoom"],
           0,
-          "rgba(255, 128, 26, 0.3)",
+          "rgba(144, 151, 131, 0.3)",
+          16,
+          "rgba(144, 151, 131, 0.3)"
+        ],
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          0.1,
+          16,
+          0.3
+        ],
+        "circle-stroke-color": "#000000",
+        "circle-blur": {"stops": [[12, 2], [16, 1]]},
+        "circle-stroke-opacity": 1
+      }
+    },
+    {
+      "id": "Lights_pedestrian spill",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "transportation",
+      "minzoom": 13,
+      "maxzoom": 17,
+      "filter": [
+        "all",
+        ["==", "class", "path"],
+        ["==", "subclass", "pedestrian"],
+        ["!=", "brunnel", "tunnel"]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-radius": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          14,
+          3,
+          16,
+          12
+        ],
+        "circle-color": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          0,
+          "rgba(255, 128, 26, 1)",
           16,
           "rgba(253, 239, 229, 0.1)"
         ],
@@ -1087,7 +1089,7 @@
           ["exponential", 1.3],
           ["zoom"],
           12,
-          0.1,
+          0.15,
           16,
           0.3
         ],
@@ -1148,7 +1150,7 @@
       "type": "circle",
       "source": "OFM",
       "source-layer": "transportation",
-      "minzoom": 14,
+      "minzoom": 13,
       "maxzoom": 17,
       "filter": [
         "all",
@@ -1191,7 +1193,7 @@
       }
     },
     {
-      "id": "Lights_Transport spill",
+      "id": "Lights_transport spill",
       "type": "circle",
       "source": "OFM",
       "source-layer": "transportation",
@@ -1214,11 +1216,6 @@
             "in",
             ["get", "class"],
             ["literal", ["secondary_off", "tertiary_off", "minor", "raceway"]]
-          ],
-          [
-            "all",
-            ["in", ["get", "class"], ["literal", ["path"]]],
-            ["==", ["get", "subclass"], "platform"]
           ]
         ]
       ],
@@ -1247,6 +1244,51 @@
           14,
           0
         ]
+      }
+    },
+    {
+      "id": "Lights_Landuse",
+      "type": "circle",
+      "source": "OFM",
+      "source-layer": "landuse",
+      "minzoom": 0,
+      "maxzoom": 15,
+      "filter": [
+        "in",
+        ["get", "class"],
+        [
+          "literal",
+          [
+            "commercial",
+            "retail",
+            "garages",
+            "theme_park",
+            "zoo",
+            "industrial",
+            "stadium"
+          ]
+        ]
+      ],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "circle-radius": {"stops": [[12, 1.5], [16, 2]], "base": 1.3},
+        "circle-color": {
+          "stops": [
+            [12, "rgba(233, 240, 225, 1)"],
+            [16, "rgba(253, 239, 229, 0.5)"]
+          ],
+          "base": 1.3
+        },
+        "circle-opacity": [
+          "interpolate",
+          ["exponential", 1.3],
+          ["zoom"],
+          12,
+          0.3,
+          16,
+          0.7
+        ],
+        "circle-blur": 1
       }
     },
     {
@@ -1312,7 +1354,7 @@
           [
             "all",
             ["in", ["get", "class"], ["literal", ["path", "rail"]]],
-            ["in", ["get", "subclass"], ["literal", ["pedestrian", "platform"]]]
+            ["in", ["get", "subclass"], ["literal", ["pedestria", "platform"]]]
           ],
           [
             "in",
