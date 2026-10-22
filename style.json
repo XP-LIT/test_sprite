@@ -544,7 +544,7 @@
       }
     },
     {
-      "id": "dots_orange-copy",
+      "id": "dots_orange",
       "type": "line",
       "source": "OFM",
       "source-layer": "transportation",
@@ -582,7 +582,7 @@
       }
     },
     {
-      "id": "dots_white-copy",
+      "id": "dots_white",
       "type": "line",
       "source": "OFM",
       "source-layer": "transportation",
@@ -1668,7 +1668,7 @@
       "type": "fill",
       "source": "OFM",
       "source-layer": "building",
-      "minzoom": 13,
+      "minzoom": 14,
       "maxzoom": 17,
       "filter": ["all"],
       "layout": {"visibility": "visible"},
