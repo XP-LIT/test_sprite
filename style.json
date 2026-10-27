@@ -262,7 +262,7 @@
           ["linear"],
           ["zoom"],
           12,
-          "rgba(255, 128, 26, 0.3)",
+          "rgba(233, 240, 225, 0.3)",
           16,
           "rgba(77, 87, 95, 0.3)"
         ],
@@ -318,7 +318,7 @@
           ["linear"],
           ["zoom"],
           12,
-          "rgba(255, 128, 26, 0.3)",
+          "rgba(233, 240, 225, 0.3)",
           16,
           "rgba(77, 87, 95, 0.3)"
         ],
@@ -439,56 +439,6 @@
       }
     },
     {
-      "id": "road_motorway",
-      "type": "line",
-      "source": "OFM",
-      "source-layer": "transportation",
-      "minzoom": 0,
-      "maxzoom": 17,
-      "filter": [
-        "all",
-        [
-          "match",
-          ["get", "class"],
-          ["motorway", "trunk", "raceway"],
-          true,
-          false
-        ],
-        ["!=", ["get", "brunnel"], "tunnel"]
-      ],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round",
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "rgba(77, 87, 95, 1)",
-        "line-width": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          5,
-          1,
-          7,
-          1.5,
-          9,
-          2,
-          11,
-          2,
-          12,
-          1,
-          14,
-          4,
-          15,
-          8
-        ],
-        "line-opacity": ["interpolate", ["linear"], ["zoom"], 12, 0.3, 16, 0],
-        "line-blur": 10,
-        "line-offset": 0,
-        "line-gap-width": 1
-      }
-    },
-    {
       "id": "road_motorway-copy",
       "type": "line",
       "source": "OFM",
@@ -541,6 +491,56 @@
         "line-offset": 0,
         "line-gap-width": 1,
         "line-dasharray": [1, 0]
+      }
+    },
+    {
+      "id": "road_motorway",
+      "type": "line",
+      "source": "OFM",
+      "source-layer": "transportation",
+      "minzoom": 0,
+      "maxzoom": 17,
+      "filter": [
+        "all",
+        [
+          "match",
+          ["get", "class"],
+          ["motorway", "trunk", "raceway"],
+          true,
+          false
+        ],
+        ["!=", ["get", "brunnel"], "tunnel"]
+      ],
+      "layout": {
+        "line-cap": "round",
+        "line-join": "round",
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "rgba(77, 87, 95, 1)",
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          5,
+          1,
+          7,
+          1.5,
+          9,
+          2,
+          11,
+          2,
+          12,
+          1,
+          14,
+          4,
+          15,
+          8
+        ],
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 12, 0.3, 16, 0],
+        "line-blur": 10,
+        "line-offset": 0,
+        "line-gap-width": 1
       }
     },
     {
@@ -1039,7 +1039,7 @@
       ],
       "layout": {"visibility": "visible"},
       "paint": {
-        "circle-color": "rgba(219, 135, 28, 0.3)",
+        "circle-color": "rgba(214, 162, 95, 0.3)",
         "circle-radius": [
           "interpolate",
           ["exponential", 1.3],
@@ -1547,18 +1547,15 @@
       "type": "circle",
       "source": "OFM",
       "source-layer": "poi",
-      "minzoom": 14,
+      "minzoom": 16,
       "maxzoom": 17,
       "filter": [
-        "all",
-        ["!=", "class", "bollard"],
-        ["!=", "class", "garden"],
-        ["!=", "class", "pitch"],
-        ["!=", "class", "stadium"],
-        ["!=", "class", "sports_centre"],
-        ["!=", "class", "swimming_pool"]
+        "any",
+        ["==", "class", "gate"],
+        ["==", "class", "parking"],
+        ["==", "class", "bus"]
       ],
-      "layout": {"visibility": "none"},
+      "layout": {"visibility": "visible"},
       "paint": {
         "circle-radius": {"stops": [[14, 3], [16, 12]], "base": 1.3},
         "circle-color": [
@@ -1592,15 +1589,12 @@
       "minzoom": 14,
       "maxzoom": 17,
       "filter": [
-        "all",
-        ["!=", "class", "bollard"],
-        ["!=", "class", "garden"],
-        ["!=", "class", "pitch"],
-        ["!=", "class", "stadium"],
-        ["!=", "class", "sports_centre"],
-        ["!=", "class", "swimming_pool"]
+        "any",
+        ["==", "class", "gate"],
+        ["==", "class", "parking"],
+        ["==", "class", "bus"]
       ],
-      "layout": {"visibility": "none"},
+      "layout": {"visibility": "visible"},
       "paint": {
         "circle-radius": {"stops": [[12, 1.5], [16, 2]], "base": 1.3},
         "circle-color": {
