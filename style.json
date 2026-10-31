@@ -1494,7 +1494,11 @@
           [
             "all",
             ["in", ["get", "class"], ["literal", ["path", "rail"]]],
-            ["in", ["get", "subclass"], ["literal", ["pedestrian", "platform"]]]
+            [
+              "in",
+              ["get", "subclass"],
+              ["literal", ["pedestrian_off", "platform"]]
+            ]
           ],
           [
             "in",
